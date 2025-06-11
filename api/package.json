@@ -1,10 +1,10 @@
 {
-  "name": "server_smart_tutor",
+  "name": "api",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "Express serverless functions for Vercel",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",

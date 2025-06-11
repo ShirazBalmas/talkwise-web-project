@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
-const PORT = 3000;
+
+// const PORT = 3000; // No longer needed for Vercel serverless
 
 const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
@@ -20,19 +21,16 @@ const cors = require("cors");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(cors());
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+// Simplified CORS configuration for Vercel
+app.use(cors({
+    origin: ['http://localhost:5173', 'https://web12-eight.vercel.app', 'https://web1-nhwiorv1l-shirazs-projects-129c0740.vercel.app'], // Add your Vercel frontend domain here
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 // Routes
 const users = require("./routes/users.route");
 app.use("/", users);
 
-// Start server
-app.listen(PORT, (err) => {
-    if (!err) console.log('Server is running on port', PORT);
-    else console.log("Error, can't start server", err);
-});
+// Important: Export the Express app for Vercel Serverless Function
+module.exports = app;
