@@ -4,7 +4,10 @@ const app = express();
 // const PORT = 3000; // No longer needed for Vercel serverless
 
 const admin = require("firebase-admin");
-const serviceAccount = require("./serviceAccountKey.json");
+// const serviceAccount = require("./serviceAccountKey.json"); // This line will be removed or commented out
+
+// Use environment variable for Firebase service account key
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
